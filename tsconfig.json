@@ -3,13 +3,14 @@
         "sourceMap": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "target": "es6",
+        "target": "es2017",
         "lib": [
             "es2017",
             "es2019",
             "esnext"
         ],
         "types": [
+            "node",
             "reflect-metadata"
         ],
         "module": "commonjs",
