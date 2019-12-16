@@ -1,0 +1,28 @@
+env:
+  es6: true
+  node: true
+extends:
+  - eslint:recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:@typescript-eslint/recommended-requiring-type-checking
+ignorePatterns:
+  - node_modules/
+  - dist/
+  - yarn.lock
+parser: '@typescript-eslint/parser'
+parserOptions:
+  project: ./tsconfig.json
+plugins:
+  - '@typescript-eslint'
+rules: 
+  'indent': [ error, 4 ]
+  'quotes': [ error, single ]
+  'comma-dangle': error
+  'comma-spacing': error
+  'semi': error
+  'semi-spacing': error
+  'semi-style': error
+  'function-paren-newline': [ error, multiline ]
+  'no-mixed-spaces-and-tabs': error
+  'arrow-body-style': error
+  '@typescript-eslint/no-explicit-any': off

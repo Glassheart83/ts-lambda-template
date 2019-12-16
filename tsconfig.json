@@ -1,30 +1,30 @@
 {
-  "compilerOptions": {
-    "sourceMap": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "target": "es6",
-    "lib": [
-      "es2017",
-      "es2019",
-      "esnext"
+    "compilerOptions": {
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "target": "es6",
+        "lib": [
+            "es2017",
+            "es2019",
+            "esnext"
+        ],
+        "types": [
+            "reflect-metadata"
+        ],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "baseUrl": "src",
+        "outDir": "dist"
+    },
+    "include": [
+        "./src/**/*.ts"
     ],
-    "types": [
-      "reflect-metadata"
-    ],
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "baseUrl": "src",
-    "outDir": "dist"
-  },
-  "include": [
-    "./src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules/**/*",
-    ".serverless/**/*",
-    ".vscode/**/*",
-    "dist",
-    "yarn.lock"
-  ]
+    "exclude": [
+        "node_modules/**/*",
+        ".serverless/**/*",
+        ".vscode/**/*",
+        "dist",
+        "yarn.lock"
+    ]
 }

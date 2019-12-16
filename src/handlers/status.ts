@@ -1,6 +1,7 @@
-export const lambda = () => {
-    return {
-        status: 200,
+export const lambda = (): any => {
+    const ok = 200;
+    return { 
+        statusCode: ok, 
         body: JSON.stringify('')
-    }
+    };
 };
