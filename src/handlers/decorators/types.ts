@@ -1,13 +1,23 @@
 import { ValidatorOptions } from 'class-validator';
-import { Context } from 'aws-lambda';
+import { Context, APIGatewayProxyResult, APIGatewayProxyEvent } from 'aws-lambda';
 
-export type BaseHandler = (event: any, options: LambdaOptions) => Promise<any>;
+export type ParsedBodyEvent = {
+    parse: () => object;
+};
+export type HttpEvent = Readonly<ParsedBodyEvent & APIGatewayProxyEvent>;
+
+export type HttpLambdaHandler = (event: APIGatewayProxyEvent, context: Context) => Promise<APIGatewayProxyResult>;
+export type HttpHandler = (event: HttpEvent) => Promise<APIGatewayProxyResult>;
+
+export type InvocableLambdaHandler = (event: any, context: Context) => Promise<any>;
+export type InvocableHandler = (event: any) => Promise<any>;
+
 export type ValidatedHandler<E> = (event: E) => Promise<any>;
 
-export type Request = {
-    headers: object;
-    executor: string;
-};
+export const httpEvent = (event: APIGatewayProxyEvent): HttpEvent => ({
+    ...event,
+    parse: () => JSON.parse(event.body)
+});
 
 export const defaultValidatorOptions = (): ValidatorOptions => ({
     validationError: {
@@ -16,17 +26,3 @@ export const defaultValidatorOptions = (): ValidatorOptions => ({
     whitelist: true,
     skipMissingProperties: true
 });
-
-export class LambdaOptions {
-
-    validation: ValidatorOptions;
-    request: Request;
-
-    constructor(event: any, context: Context) {
-        this.validation = defaultValidatorOptions();
-        this.request = {
-            headers: event.headers,
-            executor: context.functionName
-        };
-    }
-}

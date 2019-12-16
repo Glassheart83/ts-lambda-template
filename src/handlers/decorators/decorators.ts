@@ -1,17 +1,18 @@
-import { Context } from 'aws-lambda';
-import { BaseHandler, LambdaOptions, ValidatedHandler } from './types';
+import { ValidatedHandler, HttpLambdaHandler, HttpHandler, httpEvent, InvocableLambdaHandler, InvocableHandler, defaultValidatorOptions } from './types';
 import { httpDecoratorErrorAdvice } from './errorAdvice';
-import { validate } from 'class-validator';
+import { validate, ValidatorOptions } from 'class-validator';
 import { FailedValidationError } from 'common/errors/errors';
 import { invocationPayloadFactory } from 'common/lambda/lambdaInvocationPayload';
+import { loggerProvider, logger } from 'common/logs/logger';
 
-export const httpDecorator = (fn: BaseHandler) => {
+export const httpDecorator = (fn: HttpHandler): HttpLambdaHandler => {
 
-    const handle = async (event: any, context: Context) => {
+    const handle: HttpLambdaHandler = async (event, context) => {
+
+        loggerProvider().provide(context.awsRequestId, context.functionName);
+
         try {
-            const parsedEvent = JSON.parse(event.body);
-            const options = new LambdaOptions(event, context);
-            const body = await fn(parsedEvent, options);
+            const body = await fn(httpEvent(event));
             return {
                 statusCode: 200,
                 body: JSON.stringify(body)
@@ -21,29 +22,36 @@ export const httpDecorator = (fn: BaseHandler) => {
         }
     };
 
-    return (event: any = {}, context: Context) => handle(event, context);
+    return (event, context) => handle(event, context);
 };
 
-export const invocationDecorator = (fn: BaseHandler) => {
+export const invocationDecorator = (fn: InvocableHandler): InvocableLambdaHandler => {
 
-    const handle = async (event: any, context: Context) => {
-        const options = new LambdaOptions(event, context);
+    const handle: InvocableLambdaHandler = async (event, context) => {
+
+        loggerProvider().provide(context.awsRequestId, context.functionName);
+
         try {
-            const result = await fn(event, options);
+            const result = await fn(event);
             return invocationPayloadFactory.create(result, context).ok();
         } catch (error) {
             return invocationPayloadFactory.create(error, context).notOk();
         }
     };
 
-    return (event: any = {}, context: Context) => handle(event, context);
+    return (event = {}, context) => handle(event, context);
 };
 
-export const validationDecorator = async <E>(event: E, options: LambdaOptions, handler: ValidatedHandler<E>) => {
+export const validationDecorator = async <E>(
+    event: E, 
+    fn: ValidatedHandler<E>,
+    validatorOptions: ValidatorOptions = defaultValidatorOptions()
+) => {
 
-    const validationErrors = await validate(event, options.validation);
+    const validationErrors = await validate(event, validatorOptions);
     if (validationErrors.length > 0) {
-        throw new FailedValidationError(`Error occurred while validating in ${options.request.executor}`, validationErrors);
+        const executor = logger.functionName;
+        throw new FailedValidationError(`Error occurred while validating in ${executor}`, validationErrors);
     }
-    return handler(event);
+    return fn(event);
 };
