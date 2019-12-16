@@ -1,0 +1,27 @@
+service:
+  name: ts-lambda-template
+
+provider:
+  name: aws
+  stage: ${opt:stage, 'local'}
+  region: ${opt:region, 'eu-west-1'}
+  runtime: nodejs12.x
+  apiGateway:
+    minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
+
+custom:
+
+functions:
+  status:
+    handler: src/handlers/status.lambda
+    events:
+      - http:
+          method: get
+          path: status
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline
+
+package:
+  individually: true
