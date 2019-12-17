@@ -14,8 +14,15 @@
         ],
         "module": "commonjs",
         "moduleResolution": "node",
+        "paths": {
+            "@Common/*": [ "common/*" ],
+            "@Handlers/*": [ "handlers/*" ]
+        },
         "baseUrl": "src",
-        "outDir": "dist"
+        "outDir": "dist",
+        "plugins": [
+            { "transform": "typescript-transform-paths" }
+        ]
     },
     "include": [
         "./src/**/*.ts"

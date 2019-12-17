@@ -34,3 +34,4 @@ rules:
   'arrow-body-style': error
   '@typescript-eslint/no-explicit-any': off
   '@typescript-eslint/explicit-function-return-type': off
+  '@typescript-eslint/require-await': off

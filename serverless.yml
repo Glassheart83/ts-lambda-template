@@ -13,13 +13,17 @@ custom:
 
 functions:
   status:
-    handler: src/handlers/status.lambda
+    handler: dist/handlers/status.lambda
+    browserify:
+      entries:
+        - dist/handlers/status.js
     events:
       - http:
           method: get
           path: status
 
 plugins:
+  - serverless-plugin-browserifier
   - serverless-dynamodb-local
   - serverless-offline
 

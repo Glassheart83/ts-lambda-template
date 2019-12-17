@@ -2,8 +2,8 @@ import { ValidatedHandler, HttpLambdaHandler, HttpHandler, httpEvent, InvocableL
 import { httpDecoratorErrorAdvice } from './errorAdvice';
 import { validate, ValidatorOptions } from 'class-validator';
 import { FailedValidationError } from 'common/errors/errors';
-import { invocationPayloadFactory } from 'common/lambda/lambdaInvocationPayload';
-import { loggerProvider, logger } from 'common/logs/logger';
+import { loggerProvider, logger } from '@Common/logs/logger';
+import { invocationPayloadFactory } from '@Common/lambda/lambdaInvocationPayload';
 
 export const httpDecorator = (fn: HttpHandler): HttpLambdaHandler => {
 

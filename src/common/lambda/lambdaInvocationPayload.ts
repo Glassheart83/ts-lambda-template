@@ -1,6 +1,6 @@
-import { LambdaInvocationError, ApplicationError } from 'common/errors/errors';
 import { AWSError } from 'aws-sdk/lib/error';
 import { Context } from 'aws-lambda';
+import { LambdaInvocationError, ApplicationError } from '@Common/errors/errors';
 
 export class LambdaInvocationPayload {
 

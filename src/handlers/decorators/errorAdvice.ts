@@ -1,4 +1,4 @@
-import { ApplicationError } from 'common/errors/errors';
+import { ApplicationError } from '@Common/errors/errors';
 
 type HttpDecoratorResponse = {
     statusCode: number;

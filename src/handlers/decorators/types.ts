@@ -7,7 +7,7 @@ export type ParsedBodyEvent = {
 export type HttpEvent = Readonly<ParsedBodyEvent & APIGatewayProxyEvent>;
 
 export type HttpLambdaHandler = (event: APIGatewayProxyEvent, context: Context) => Promise<APIGatewayProxyResult>;
-export type HttpHandler = (event: HttpEvent) => Promise<APIGatewayProxyResult>;
+export type HttpHandler = (event: HttpEvent) => Promise<any>;
 
 export type InvocableLambdaHandler = (event: any, context: Context) => Promise<any>;
 export type InvocableHandler = (event: any) => Promise<any>;
