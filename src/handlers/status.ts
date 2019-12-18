@@ -16,6 +16,7 @@ export const lambda = httpDecorator(async (event: HttpEvent) => {
 
     const id = event.queryStringParameters['id'];
     const status = new StatusEvent({ id });
+
     return validationDecorator(status, async (event: StatusEvent) => ({
         ...event,
         ...process.env

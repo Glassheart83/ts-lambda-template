@@ -10,13 +10,15 @@
         ],
         "types": [
             "node",
-            "reflect-metadata"
+            "reflect-metadata",
+            "jest"
         ],
         "module": "commonjs",
         "moduleResolution": "node",
         "paths": {
             "@Common/*": [ "common/*" ],
-            "@Handlers/*": [ "handlers/*" ]
+            "@Handlers/*": [ "handlers/*" ],
+            "@Storages/*": [ "storages/*" ]
         },
         "baseUrl": "src",
         "outDir": "dist",

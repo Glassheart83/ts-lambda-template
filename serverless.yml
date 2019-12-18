@@ -10,6 +10,23 @@ provider:
     minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
 
 custom:
+  database:
+    testEntityTableName: ${self:provider.stage}_test_entity
+  browserify:
+    ignoreTransform: [coffeeify]
+    fullPaths: true
+    exclude:
+      - aws-sdk
+  serverless-offline:
+    port: 4000
+  dynamodb:
+    stages:
+      - local
+    start:
+      port: 9988
+      inMemory: true
+      heapMax: 1g
+      migrate: true
 
 functions:
   status:
@@ -21,6 +38,8 @@ functions:
       - http:
           method: get
           path: status
+resources:
+  - ${file(./config/resources.yml)}
 
 plugins:
   - serverless-plugin-browserifier

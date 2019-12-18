@@ -9,7 +9,9 @@ extends:
 ignorePatterns:
   - node_modules/
   - dist/
+  - scripts/
   - yarn.lock
+  - jest.config.js
 parser: '@typescript-eslint/parser'
 parserOptions:
   project: ./tsconfig.json
@@ -17,8 +19,6 @@ parserOptions:
     - src/**/*.ts
   ecmaVersion: 2019
   sourceType: module
-  ecmaFeatures:
-    jsx: true
 plugins:
   - '@typescript-eslint'
 rules: 
