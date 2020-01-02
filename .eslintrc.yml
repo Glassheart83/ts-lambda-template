@@ -10,8 +10,9 @@ ignorePatterns:
   - node_modules/
   - dist/
   - scripts/
+  - config/
+  - jest*
   - yarn.lock
-  - jest.config.js
 parser: '@typescript-eslint/parser'
 parserOptions:
   project: ./tsconfig.json
