@@ -4,7 +4,7 @@ import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { serializer } from '@Common/serializer';
 import { TestEntityStorage } from '@Storages/testEntityStorage';
 
-describe('', () => {
+describe('TestEntityStorage should insert and read from dynamodb', () => {
 
     beforeEach(() => {
         jest.resetModules();
@@ -13,7 +13,7 @@ describe('', () => {
         };
     });
 
-    test('', async () => {
+    test('Inserting a test entity', async () => {
 
         const client = new DocumentClient({
             endpoint: 'localhost:9988',

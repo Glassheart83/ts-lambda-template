@@ -1,7 +1,7 @@
 import { ValidatedHandler, HttpLambdaHandler, HttpHandler, httpEvent, InvocableLambdaHandler, InvocableHandler, defaultValidatorOptions } from './types';
 import { httpDecoratorErrorAdvice } from './errorAdvice';
 import { validate, ValidatorOptions } from 'class-validator';
-import { FailedValidationError } from 'common/errors/errors';
+import { FailedValidationError } from '@Common/errors/errors';
 import { loggerProvider, logger } from '@Common/logs/logger';
 import { invocationPayloadFactory } from '@Common/lambda/lambdaInvocationPayload';
 

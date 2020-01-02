@@ -15,9 +15,7 @@ export class TestEntityStorage {
     async save(data: TestEntity): Promise<TestEntity> {
 
         const params = testEntityStorageParamsBuilder.buildSave(data);
-        const result = await this.client.put(params).promise();
-
-        console.log(result);
+        await this.client.put(params).promise();
 
         return data;
     }
