@@ -30,9 +30,9 @@
         "./src/**/*.ts"
     ],
     "exclude": [
-        "node_modules/**/*",
-        ".serverless/**/*",
-        ".vscode/**/*",
+        "node_modules",
+        ".serverless",
+        ".vscode",
         "dist",
         "yarn.lock"
     ]
