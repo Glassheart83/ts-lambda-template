@@ -1,4 +1,5 @@
-import { serializer } from './../common/serializer';
+import { testEntityStorageParamsBuilder } from './builders/testEntityStorageParamsBuilder';
+import { serializer } from '@Common/serializer';
 import { TestEntity } from './entities/testEntity';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 
@@ -11,9 +12,13 @@ export class TestEntityStorage {
         this.client = client;
     }
 
-    /* async save(data: Partial<TestEntity> = {}): Promise<TestEntity> {
+    async save(data: TestEntity): Promise<TestEntity> {
 
-        const result = await this.client.put().promise();
+        const params = testEntityStorageParamsBuilder.buildSave(data);
+        const result = await this.client.put(params).promise();
 
-    } */
+        console.log(result);
+
+        return data;
+    }
 }
