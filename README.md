@@ -3,7 +3,12 @@
 *ts-lambda-template* is a boilerplate project, with some premade technical choices already made, some utility code already included and some example code that aim to show the preferable application architecture.
 It's written in TypeScript using the NodeJS runtime for lambda execution.
 ### Usage
-- TODO
+Various verbs are available through `yarn`.
+- `yarn` or `yarn install` install the dependencies.
+- `yarn start [environment]` start the application using the configuration of the specified environment. *local* is the most common as it use the local DynamoDB, but also *dev*, *ath*, *qa* are usable using remote configuration.
+- `yarn lint` runs the linter and code formatting.
+- `yarn build` runs a clean, the linter and build the code. Built code is stored in `dist/` directory.
+- `yarn test` runs Jest suite, running all tests under `__tests__` folders in `src/`.
 ### Dependencies
 Some libraries are already included to address the most common issues when bootstrapping this kind of projects.
 Those are worth some details:
@@ -15,4 +20,36 @@ Here how the transformation process works together with some available transform
 - The local development takes advantage for the most simple offline lambda environment available. While a complete emulation of the lambda stack could be achieved with various Docker images, this project takes advantage of the *Serverless Framework* and two plugins: `serverless-offline` and `serverless-dynamodb-local`, that allow to run a local lambda environment with **some** features.
 - `jest` is used for testing in order to his integration with TypeScript through `ts-jest` and a local *DynamoDB* runner through `jest-dynamodb`. Tests are written in TypeScript and can be used to test real behaviours on *DynamoDB*.
 ### Project structure
-- TODO
+The project is structured to thin layers and focus the lambda function as entrypoint.
+Some relevant packages in project structure are:
+- `handlers` is meant to be a collection of lambda functions themselves and support classes. Lambda functions are meant to be wrapper in two utility decorators constructing typings and managing errors.
+    - `httpDecorator` is used to wrap functions exposed through API Gateway.
+    - `invocationDecorator` is used to wrap functions meant to be called from other functions.
+
+    A simple lambda function should follow this example:
+    ```ts
+    class Event {
+
+        @IsString() // decorator used for validation
+        id: string;
+
+        constructor(fields: Partial<Event>) {
+            Object.assign(this, fields);
+        }
+    }
+
+    export const lambda = httpDecorator(async (event: HttpEvent) => {
+
+        // use the http wrapped event to get parameters you need from the request
+        const id = event.queryStringParameters['id'];
+
+        // construct the event (it's preferrable to have it as a non exported object to limit its usage to the layer)
+        const status = new Event({ id });
+
+        return validationDecorator(status, async (event: StatusEvent) => {
+            // do logic with the validated object
+        });
+    });
+    ```
+    An extensive documentation of validation decorators can be found here: [Class Validator Documentation](https://github.com/typestack/class-validator)
+- `storages` is meant to be the designated directory for repositories and database-layered model entities (`entities`) and object manipulations (`builders`). `builders` are required to convert the coded models in data structures meaningful to DynamoDB. DynamoDB only understands few types of data (see [Dynamo Data Types](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBMapper.DataTypes.html) for more details) so some transformations (for example for dates) is required.
