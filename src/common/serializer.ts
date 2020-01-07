@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { plainToClass, classToPlain, ClassTransformOptions } from 'class-transformer';
 import { ClassType } from 'class-transformer/ClassTransformer';
 
