@@ -8,6 +8,6 @@ export const testEntityStorageParamsBuilder = {
             ...serializer<TestEntity>().serialize(data),
             ttl: Date.now() / 1000 // TODO add ttl in config
         },
-        TableName: process.env.testEntityTableName
+        TableName: process.env.TEST_ENTITY_TABLE_NAME
     })
 };

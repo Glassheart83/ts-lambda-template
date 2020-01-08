@@ -1,5 +1,5 @@
 const config = {
-    isDebugEnabled: process.env.logLevel === 'DEBUG',
+    isDebugEnabled: process.env.LOG_LEVEL.toUpperCase() === 'DEBUG',
     colors: {
         reset: '\x1b[0m',
         yellow: '\x1b[33m',

@@ -7,13 +7,14 @@ provider:
   region: ${opt:region, 'eu-west-1'}
   runtime: nodejs12.x
   apiGateway:
-    minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
+    minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 K
+  environment:
+    ${file(./config/env.yml)}
 
 custom:
   database:
     testEntityTableName: ${self:provider.stage}_test_entity
   browserify:
-    ignoreTransform: [coffeeify]
     fullPaths: true
     exclude:
       - aws-sdk

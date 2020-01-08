@@ -1,4 +1,3 @@
-import { logger } from './../common/logs/logger';
 import { TestEntity } from '@Storages/entities/testEntity';
 import { serializer } from '@Common/serializer';
 import { TestEntityStorage } from '@Storages/testEntityStorage';

@@ -16,7 +16,7 @@ export class LambdaInvoker {
             lambda = new Lambda({
                 apiVersion: '2015-03-31',
                 region: process.env.AWS_REGION,
-                endpoint: process.env.IS_OFFLINE ? 'http://localhost:4000' : undefined
+                endpoint: process.env.IS_OFFLINE ? process.env.LAMBDA_ENDPOINT : undefined
             });
         }
         this.lambda = lambda;
@@ -24,7 +24,7 @@ export class LambdaInvoker {
 
     async invoke(functionName: string, request: any = {}, invocationType = InvocationType.RequestResponse): Promise<LambdaInvocationPayload> {
 
-        const buildFunctionName = () => `${process.env.serviceName}-${process.env.stage}-${functionName}`;
+        const buildFunctionName = () => `${process.env.SERVICE_NAME}-${process.env.STAGE}-${functionName}`;
         const doInvocation = async (): Promise<LambdaInvocationPayload> => {
             try {
 

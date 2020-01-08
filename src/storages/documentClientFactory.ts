@@ -9,7 +9,7 @@ export const defaultDocumentClient = () => {
             convertEmptyValues: true,
             sslEnabled: false,
             region: process.env.AWS_REGION,
-            endpoint: process.env.dynamoEndpointUrl
+            endpoint: process.env.IS_OFFLINE ? process.env.DYNAMO_ENDPOINT : undefined
         });
     }
     return client;
